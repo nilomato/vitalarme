@@ -1,0 +1,15 @@
+@media(max-width:770px){
+#vitalarme .v-four { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#vitalarme .v-two { grid-template-columns:1fr; }
+#vitalarme .v-steps { grid-template-columns:1fr; }
+#vitalarme .v-hero { padding:22px; }
+#vitalarme .v-top { padding:16px; }
+#vitalarme .v-wrap { padding:17px 12px; }
+#vitalarme h1 { font-size:23px; }
+}
+@media(max-width:480px){
+#vitalarme .v-four,#vitalarme .v-care { grid-template-columns:1fr; }
+#vitalarme .v-card { padding:16px; }
+#vitalarme .v-visual { grid-template-columns:1fr; text-align:center; }
+#vitalarme .v-btnrow .v-btn { flex:1; }
+}
