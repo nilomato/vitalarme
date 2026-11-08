@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VitalArme</title>
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./layout.css">
+<link rel="stylesheet" href="./components.css">
+<link rel="stylesheet" href="./responsive.css">
+<script src="./utils.js" defer></script>
+<script src="./navigation.js" defer></script>
+<script src="./contacts.js" defer></script>
+<script src="./forms.js" defer></script>
+<script src="./simulator.js" defer></script>
+<script src="./app.js" defer></script>
+</head>
+<body>
+<div id="vitalarme">
+<header class="v-top">
+<div class="v-brand"><div class="v-logo">♥</div><div><strong>VITALARME</strong><small>O alarme vital pra você.</small></div></div>
+<span class="v-tag">PROTÓTIPO INTERATIVO • SEM SMS REAL</span>
+</header>
+<div class="v-wrap">
+<section id="v-entrada">
+<div class="v-grid v-two">
+<div class="v-hero">
+<span class="v-tag">TECNOLOGIA E CUIDADO</span>
+<h1 style="margin-top:20px">Mais segurança para quem você ama.</h1>
+<p>Uma interface para configurar o detector de quedas, organizar contatos de emergência e acompanhar os alertas quando o aparelho estiver integrado.</p>
+<div class="v-steps"><div class="v-step"><b>01</b>Cadastre o chip e o idoso</div><div class="v-step"><b>02</b>Defina 3 ou mais contatos</div><div class="v-step"><b>03</b>Teste o fluxo de alertas</div></div>
+</div>
+<div class="v-card">
+<h2>Entrar no Vitalarme</h2>
+<p class="v-muted">Acesso demonstrativo para conhecer a plataforma.</p>
+<div class="v-note"><b>Dados fictícios:</b> não utilize senha verdadeira, PIN real, informações médicas ou telefones pessoais nesta demonstração pública.</div>
+<form id="v-login-form">
+<div class="v-field"><label for="v-login-phone">Número do chip com DDD</label><input id="v-login-phone" inputmode="numeric" placeholder="(11) 90000-0000" required></div>
+<div class="v-field"><label for="v-login-carrier">Operadora</label><select id="v-login-carrier"><option>Vivo</option><option>Claro</option><option>TIM</option><option>Outra</option></select></div>
+<div class="v-field"><label for="v-login-password">Senha fictícia de demonstração</label><input id="v-login-password" type="password" minlength="4" placeholder="Digite 4 ou mais caracteres" required></div>
+<button type="submit" class="v-btn v-yellow" style="width:100%">Acessar demonstração →</button>
+<p class="v-small" style="margin:12px 0 0">Não existe autenticação real nesta versão. Nenhuma senha ou PIN é armazenado pelo código.</p>
+</form>
+</div>
+</div>
+</section>
+<section id="v-sistema" hidden>
+<div class="v-note"><b>Modo demonstração:</b> dispositivo ainda não conectado. Todos os eventos são simulados e os dados inseridos permanecem apenas na memória desta página, até ela ser recarregada. O sistema não envia SMS ou chamadas.</div>
+<nav class="v-nav" role="tablist" aria-label="Navegação do Vitalarme">
+<button class="v-tab" data-tab="painel" aria-selected="true" type="button">◉ Painel</button>
+<button class="v-tab" data-tab="cadastro" aria-selected="false" type="button">▣ Dispositivo e idoso</button>
+<button class="v-tab" data-tab="contatos" aria-selected="false" type="button">♧ Contatos</button>
+<button class="v-tab" data-tab="historico" aria-selected="false" type="button">◷ Histórico</button>
+<button class="v-tab" data-tab="cuidados" aria-selected="false" type="button">♡ Prevenção</button>
+<button class="v-tab" data-tab="simulador" aria-selected="false" type="button">⚙ Simulador</button>
+<button class="v-tab" id="v-sair" type="button">Sair</button>
+</nav>
+<section id="v-alarm-panel" class="v-alarm" role="alert" hidden>
+<span class="v-badge v-warning">SIMULAÇÃO • NENHUM SMS SERÁ ENVIADO</span>
+<h2 id="v-alarm-title" style="margin-top:12px">Possível queda identificada</h2>
+<p>Este é um teste visual do fluxo de alerta. O dispositivo físico não foi acionado.</p>
+<div class="v-timer" id="v-countdown">15</div>
+<p class="v-small">Segundos restantes para cancelar esta simulação.</p>
+<div class="v-btnrow"><button class="v-btn v-ghost" id="v-cancel-alarm">Cancelar falso alarme</button><button class="v-btn v-red" id="v-confirm-alarm">Simular aviso agora</button></div>
+</section>
+<section class="v-page" id="v-page-painel">
+<div class="v-card v-sectionhead">
+<div><h1>Painel de monitoramento</h1><p class="v-muted">Perfil: <b id="v-dash-name">Maria (exemplo)</b></p></div>
+<span class="v-badge v-warning">Aguardando conexão com o hardware</span>
+</div>
+<div class="v-grid v-four">
+<div class="v-card v-metric"><span class="v-ico">⌁</span><p class="v-small">ESTADO DO APARELHO</p><strong>Não conectado</strong><small>Ainda sem comunicação real</small></div>
+<div class="v-card v-metric"><span class="v-ico">▥</span><p class="v-small">REDE GSM</p><strong id="v-dash-carrier">Vivo</strong><small>Sinal não verificado</small></div>
+<div class="v-card v-metric"><span class="v-ico">▰</span><p class="v-small">BATERIA</p><strong>Indisponível</strong><small>Depende do hardware</small></div>
+<div class="v-card v-metric"><span class="v-ico">♧</span><p class="v-small">CONTATOS</p><strong id="v-dash-count">3 cadastrados</strong><small>Números usados apenas na simulação</small></div>
+</div>
+<div class="v-grid v-two">
+<div class="v-card"><h2>Central Vitalarme</h2><div class="v-visual"><div class="v-device"><div class="v-led"><span class="v-dot"></span> GSM --</div><div class="v-sos">SOS</div><small style="font-size:10px">MODELO VISUAL</small></div><div><span class="v-badge">Modelo demonstrativo</span><h3 style="margin-top:12px">Sensor → GSM → Contatos</h3><p class="v-muted">O fluxo será automático apenas após a programação do dispositivo e a integração com o serviço de comunicação.</p><div class="v-btnrow"><button class="v-btn v-red" data-goto="simulador">Testar queda</button><button class="v-btn v-outline" data-goto="cadastro">Configurar</button></div></div></div></div>
+<div class="v-card"><div class="v-sectionhead"><h2>Últimos eventos</h2><button class="v-btn v-ghost" data-goto="historico">Ver histórico</button></div><div id="v-recent" class="v-list"><div class="v-empty">Nenhum evento disponível nesta demonstração.</div></div></div>
+</div>
+</section>
+<section class="v-page" id="v-page-cadastro" hidden>
+<div class="v-card"><h2>Dispositivo GSM e dados do idoso</h2><p class="v-muted">Configure as informações usadas na apresentação do sistema.</p>
+<form id="v-settings-form">
+<div class="v-grid v-two">
+<div class="v-field"><label for="v-gsm">Número do chip GSM *</label><input id="v-gsm" inputmode="numeric" required></div>
+<div class="v-field"><label for="v-operator">Operadora *</label><select id="v-operator"><option>Vivo</option><option>Claro</option><option>TIM</option><option>Outra</option></select></div>
+<div class="v-field"><label for="v-serial">Código de série do dispositivo</label><input id="v-serial" value="VT-DEMO-001" readonly></div>
+<div class="v-field"><label for="v-sim-pin">PIN do SIM</label><input id="v-sim-pin" type="password" placeholder="Disponível apenas com integração segura" disabled></div>
+<div class="v-field"><label for="v-elder-name">Nome do idoso *</label><input id="v-elder-name" required></div>
+<div class="v-field"><label for="v-resp-name">Nome do responsável *</label><input id="v-resp-name" required></div>
+<div class="v-field"><label for="v-resp-phone">Celular do responsável *</label><input id="v-resp-phone" inputmode="numeric" required></div>
+<div class="v-field"><label for="v-address">Endereço de referência (opcional)</label><input id="v-address" placeholder="Use endereço fictício no teste"></div>
+</div>
+<div class="v-field"><label for="v-notes">Observações para atendimento (opcional)</label><textarea id="v-notes" placeholder="Não informe dados médicos reais nesta demonstração"></textarea></div>
+<div class="v-info">O PIN só poderá ser configurado por um canal seguro no sistema definitivo. Cadastrar dados nesta tela não altera um chip ou dispositivo físico.</div>
+<button class="v-btn" type="submit">Salvar dados nesta sessão</button>
+</form>
+</div>
+</section>
+<section class="v-page" id="v-page-contatos" hidden>
+<div class="v-card">
+<div class="v-sectionhead"><div><h2>Contatos de emergência</h2><p class="v-muted">Cadastre pelo menos 3 contatos com celulares diferentes.</p></div><button class="v-btn" id="v-add-contact">+ Adicionar contato</button></div>
+<div class="v-info" id="v-contacts-requirement">3 contatos cadastrados. Mínimo atendido.</div>
+<div id="v-contact-list" class="v-list"></div>
+<div class="v-line"></div>
+<div id="v-contact-editor" hidden>
+<h3 id="v-editor-title">Adicionar contato</h3>
+<form id="v-contact-form"><div class="v-grid v-two">
+<div class="v-field"><label for="v-c-name">Nome *</label><input id="v-c-name" required></div>
+<div class="v-field"><label for="v-c-relation">Parentesco ou vínculo *</label><input id="v-c-relation" required></div>
+<div class="v-field"><label for="v-c-phone">Celular com DDD *</label><input id="v-c-phone" inputmode="numeric" required></div>
+<div class="v-field"><label for="v-c-type">Notificação prevista</label><select id="v-c-type"><option>SMS</option><option>SMS + chamada</option></select></div>
+</div><div class="v-btnrow"><button type="submit" class="v-btn">Salvar contato</button><button type="button" class="v-btn v-ghost" id="v-close-editor">Cancelar</button></div></form>
+</div>
+<div class="v-info">A opção “SMS + chamada” é uma preferência de cadastro; chamadas reais dependerão das capacidades do módulo GSM e da programação do aparelho.</div>
+</div>
+</section>
+<section class="v-page" id="v-page-historico" hidden>
+<div class="v-card"><div class="v-sectionhead"><div><h2>Histórico de alertas</h2><p class="v-muted">Somente eventos de demonstração criados nesta sessão.</p></div><select id="v-filter" aria-label="Filtrar histórico" style="width:auto"><option value="ALL">Todos os eventos</option><option value="FALL">Quedas</option><option value="SOS">SOS</option><option value="TEST">Testes</option><option value="CANCEL">Cancelamentos</option></select></div>
+<div class="v-table"><table><thead><tr><th>Data e hora</th><th>Tipo</th><th>Descrição</th><th>Situação</th></tr></thead><tbody id="v-history"></tbody></table></div>
+</div>
+<div class="v-card"><h3>Exemplo de mensagem GSM</h3><p class="v-small" id="v-sms-preview"></p><p class="v-muted">Esta é apenas uma prévia da mensagem; não há confirmação de envio ou entrega.</p></div>
+</section>
+<section class="v-page" id="v-page-cuidados" hidden>
+<div class="v-hero"><span class="v-tag">GUIA DE PREVENÇÃO</span><h1 style="margin-top:15px">Prevenção de quedas e primeiros cuidados</h1><p>Orientações breves para familiares e cuidadores.</p></div>
+<div class="v-card"><h2>O que fazer após uma queda?</h2><div class="v-care">
+<div class="v-carearticle"><h3>1. Avalie antes de ajudar a levantar</h3><p>Se houver dor forte ou suspeita de lesão na cabeça, coluna ou quadril, não mova a pessoa precipitadamente.</p></div>
+<div class="v-carearticle"><h3>2. Observe o estado da pessoa</h3><p>Verifique se responde, respira normalmente e relata dores. Em situações graves, acione o SAMU 192.</p></div>
+<div class="v-carearticle"><h3>3. Busque orientação de saúde</h3><p>Quedas podem ter consequências não imediatamente perceptíveis. Procure avaliação profissional quando necessário, especialmente após impacto na cabeça.</p></div>
+<div class="v-carearticle"><h3>4. Avise um responsável</h3><p>Comunique a ocorrência e mantenha acompanhamento adequado, mesmo quando não houver ferimentos aparentes.</p></div>
+</div></div>
+<div class="v-card"><h2>Como prevenir quedas em casa?</h2><div class="v-care">
+<div class="v-carearticle"><h3>Evite tapetes soltos</h3><p>Remova tapetes escorregadios ou use modelos firmemente fixados e antiderrapantes.</p></div>
+<div class="v-carearticle"><h3>Instale barras de apoio</h3><p>Banheiros e locais de maior risco devem ter apoios instalados corretamente.</p></div>
+<div class="v-carearticle"><h3>Mantenha boa iluminação</h3><p>Ilumine corredores e o trajeto do quarto até o banheiro, inclusive à noite.</p></div>
+<div class="v-carearticle"><h3>Deixe os caminhos livres</h3><p>Evite fios atravessando passagens, caixas no chão e móveis que dificultem a circulação.</p></div>
+</div></div>
+</section>
+<section class="v-page" id="v-page-simulador" hidden>
+<div class="v-card"><h2>Simulador do aparelho</h2><p class="v-muted">Demonstração dos comandos de emergência. Nenhuma detecção física ou comunicação GSM acontece aqui.</p>
+<div class="v-grid v-two">
+<div class="v-card" style="background:#f8fbff"><h3>Possível queda</h3><p class="v-muted">Simula a identificação de um movimento compatível com queda e abre uma janela de cancelamento de 15 segundos.</p><button id="v-sim-fall" class="v-btn v-red">Simular detecção de queda</button></div>
+<div class="v-card" style="background:#f8fbff"><h3>Botão SOS</h3><p class="v-muted">Simula o acionamento manual do botão de emergência do dispositivo físico.</p><button id="v-sim-sos" class="v-btn v-yellow">Simular botão SOS</button></div>
+</div>
+</div>
+<div class="v-card"><h3>Teste de aviso aos contatos</h3><p class="v-muted">Veja quais números receberiam uma mensagem caso existisse integração real.</p><button class="v-btn" id="v-open-test">Preparar teste de comunicação</button>
+<div id="v-test-area" class="v-info" hidden><b>Destinatários configurados</b><div id="v-test-recipients" style="margin:10px 0"></div><p>Ao confirmar, será registrado apenas um teste simulado no histórico.</p><div class="v-btnrow"><button class="v-btn" id="v-confirm-test">Confirmar simulação</button><button class="v-btn v-ghost" id="v-cancel-test">Voltar</button></div></div>
+</div>
+</section>
+</section>
+<div class="v-foot">Vitalarme • Protótipo demonstrativo • Não substitui atendimento médico ou serviços de emergência (SAMU 192 / Bombeiros 193).</div>
+</div>
+<div id="v-toast" class="v-toast" role="status" aria-live="polite" hidden></div>
+</div>
+</body>
+</html>
