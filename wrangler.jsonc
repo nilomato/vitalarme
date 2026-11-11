@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vitalarme",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-10",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vitalarme-db",
+      "database_id": "COLE_AQUI_O_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "SMS_ENABLED": "false"
+  }
+}
