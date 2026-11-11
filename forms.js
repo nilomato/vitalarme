@@ -4,58 +4,55 @@ const VA = window.Vitalarme;
 if (!VA) return;
 const $ = VA.$;
 const state = VA.state;
+function fillSettings() {
+const d = state.device;
+$('v-gsm').value = d.gsm || '';
+$('v-operator').value = d.operator || 'Vivo';
+$('v-serial').value = d.serial || '';
+$('v-elder-name').value = d.elderName || '';
+$('v-resp-name').value = d.respName || '';
+$('v-resp-phone').value = d.respPhone || '';
+$('v-address').value = d.address || '';
+$('v-notes').value = d.notes || '';
+}
+VA.fillSettings = fillSettings;
 VA.initForms = function () {
-$('v-login-form').addEventListener('submit', e => {
+$('v-login-form').addEventListener('submit', async e => {
 e.preventDefault();
-const num = $('v-login-phone').value.trim();
-if (!VA.isMobile(num)) { VA.notify('Informe um celular válido com DDD: (11) 90000-0000.'); return; }
-state.device.gsm = VA.formatMobile(num);
-state.device.carrier = $('v-login-carrier').value;
+const phone = $('v-login-phone').value.trim();
+if (!VA.isMobile(phone)) { VA.notify('Informe um celular válido com DDD: (11) 90000-0000.'); return; }
+const result = await VA.api('POST', '/api/login', {phone, password: $('v-login-password').value});
 $('v-login-password').value = '';
-$('v-gsm').value = state.device.gsm;
-$('v-operator').value = state.device.carrier;
-$('v-elder-name').value = state.elderly.name;
-$('v-resp-name').value = state.elderly.responsible;
-$('v-resp-phone').value = state.elderly.phone;
-$('v-address').value = state.elderly.address;
-$('v-notes').value = state.elderly.notes;
-$('v-entrada').hidden = true;
-$('v-sistema').hidden = false;
-VA.go('painel'); VA.renderAll();
+if (!result.ok) { VA.notify(result.data.message || 'Não foi possível entrar.'); return; }
+VA.applyState(result.data);
+VA.showSystem();
 });
-$('v-settings-form').addEventListener('submit', e => {
+$('v-settings-form').addEventListener('submit', async e => {
 e.preventDefault();
 if (!VA.isMobile($('v-gsm').value) || !VA.isMobile($('v-resp-phone').value)) {
 VA.notify('Confira os celulares do chip e do responsável. Informe DDD + 9 dígitos.'); return;
 }
-state.device.gsm = VA.formatMobile($('v-gsm').value);
-state.device.carrier = $('v-operator').value;
-state.elderly = {
-name:$('v-elder-name').value.trim(), responsible:$('v-resp-name').value.trim(),
-phone:VA.formatMobile($('v-resp-phone').value), address:$('v-address').value.trim(),
-notes:$('v-notes').value.trim()
-};
-$('v-gsm').value = state.device.gsm;
-$('v-resp-phone').value = state.elderly.phone;
-VA.renderAll(); VA.notify('Dados atualizados nesta sessão de demonstração.');
+const result = await VA.api('PUT', '/api/device', {
+gsm: $('v-gsm').value, operator: $('v-operator').value, serial: $('v-serial').value,
+elderName: $('v-elder-name').value, respName: $('v-resp-name').value, respPhone: $('v-resp-phone').value,
+address: $('v-address').value, notes: $('v-notes').value
 });
-$('v-contact-form').addEventListener('submit', e => {
+if (!result.ok) { VA.notify(result.data.message || 'Não foi possível salvar.'); return; }
+VA.applyState(result.data.state); fillSettings(); VA.renderAll(); VA.notify('Dados salvos.');
+});
+$('v-contact-form').addEventListener('submit', async e => {
 e.preventDefault();
-const editIndex = VA.ui.editIndex;
-const c = {
-name:$('v-c-name').value.trim(), relation:$('v-c-relation').value.trim(),
-phone:VA.formatMobile($('v-c-phone').value), type:$('v-c-type').value
-};
-if (!c.name || !c.relation || !VA.isMobile($('v-c-phone').value)) {
+const position = VA.ui.editPosition;
+const body = {name: $('v-c-name').value, relation: $('v-c-relation').value, phone: $('v-c-phone').value, type: $('v-c-type').value};
+if (!body.name.trim() || !body.relation.trim() || !VA.isMobile(body.phone)) {
 VA.notify('Preencha nome, vínculo e um celular válido com DDD.'); return;
 }
-if (state.contacts.some((other, i) => i !== editIndex && VA.digits(other.phone) === VA.digits(c.phone))) {
-VA.notify('Este celular já está cadastrado em outro contato.'); return;
-}
-if (editIndex >= 0) state.contacts[editIndex] = c;
-else state.contacts.push(c);
+const result = position > 0
+? await VA.api('PUT', '/api/contacts/' + position, body)
+: await VA.api('POST', '/api/contacts', body);
+if (!result.ok) { VA.notify(result.data.message || 'Não foi possível salvar o contato.'); return; }
 $('v-contact-editor').hidden = true;
-VA.renderAll(); VA.notify('Contato salvo nesta sessão.');
+VA.applyState(result.data.state); VA.renderAll(); VA.notify('Contato salvo.');
 });
 };
 })();

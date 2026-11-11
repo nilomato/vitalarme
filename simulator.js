@@ -20,18 +20,22 @@ remaining--; $('v-countdown').textContent = remaining;
 if (remaining <= 0) concludeAlarm();
 }, 1000);
 }
+function logSimulated(type, title, status) {
+state.events.unshift({when:VA.now(), type, title, status});
+VA.renderHistory();
+}
 function concludeAlarm() {
 const type = alertType;
 stopAlarm();
-VA.logEvent(type, type === 'FALL' ? 'Possível queda detectada (simulação)' : 'Botão SOS acionado (simulação)', 'Simulado — SMS não enviado');
-VA.go('historico'); VA.notify('Simulação registrada. Nenhum SMS ou chamada real foi efetuado.');
+logSimulated(type, type === 'FALL' ? 'Possível queda detectada (simulação)' : 'Botão SOS acionado (simulação)', 'Simulado — SMS não enviado');
+VA.go('historico'); VA.notify('Simulação registrada apenas nesta tela. Nenhum SMS ou chamada real foi efetuado.');
 }
 VA.initSimulator = function () {
 $('v-sim-fall').addEventListener('click', () => startAlarm('FALL'));
 $('v-sim-sos').addEventListener('click', () => startAlarm('SOS'));
 $('v-cancel-alarm').addEventListener('click', () => {
 stopAlarm();
-VA.logEvent('CANCEL', 'Alerta de demonstração cancelado', 'Cancelado — sem envio');
+logSimulated('CANCEL', 'Alerta de demonstração cancelado', 'Cancelado — sem envio');
 VA.notify('Falso alarme cancelado na simulação.');
 });
 $('v-confirm-alarm').addEventListener('click', concludeAlarm);
@@ -42,8 +46,8 @@ $('v-test-area').hidden = false;
 $('v-cancel-test').addEventListener('click', () => { $('v-test-area').hidden = true; });
 $('v-confirm-test').addEventListener('click', () => {
 $('v-test-area').hidden = true;
-VA.logEvent('TEST', `Teste demonstrativo para ${state.contacts.length} contatos`, 'Simulado — nenhuma mensagem enviada');
-VA.notify('Teste registrado, sem envio de SMS.'); VA.go('historico');
+logSimulated('TEST', `Teste demonstrativo para ${state.contacts.length} contatos`, 'Simulado — nenhuma mensagem enviada');
+VA.notify('Teste simulado registrado apenas nesta tela, sem envio de SMS.'); VA.go('historico');
 });
 };
 })();

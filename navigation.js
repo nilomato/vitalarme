@@ -10,6 +10,9 @@ VA.go = go;
 VA.initNavigation = function () {
 VA.root.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.tab)));
 VA.root.querySelectorAll('[data-goto]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.goto)));
-VA.$('v-sair').addEventListener('click', () => window.location.reload());
+VA.$('v-sair').addEventListener('click', async () => {
+await VA.api('POST', '/api/logout', {});
+window.location.reload();
+});
 };
 })();
