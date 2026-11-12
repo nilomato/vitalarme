@@ -1,0 +1,20 @@
+#vitalarme .v-top { background:#102d59; color:white; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+#vitalarme .v-brand { display:flex; align-items:center; gap:12px; }
+#vitalarme .v-logo { background:#facc15; color:#102d59; width:47px; height:47px; display:grid; place-items:center; border-radius:13px; font-size:26px; font-weight:bold; }
+#vitalarme .v-brand strong { font-size:23px; letter-spacing:.3px; display:block; line-height:1.1; }
+#vitalarme .v-brand small { font-size:12px; color:#d4dff0; }
+#vitalarme .v-wrap { width:min(1120px,100%); padding:22px 18px; margin:auto; }
+#vitalarme .v-grid { display:grid; gap:16px; }
+#vitalarme .v-two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#vitalarme .v-four { grid-template-columns:repeat(4,minmax(0,1fr)); }
+#vitalarme .v-hero { background:linear-gradient(125deg,#102d59,#1e56a0); color:white; border-radius:20px; padding:30px; }
+#vitalarme .v-hero p { color:#e0eafb; }
+#vitalarme .v-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:21px; }
+#vitalarme .v-step { padding:13px; border:1px solid #ffffff35; border-radius:12px; background:#ffffff12; font-size:13px; }
+#vitalarme .v-step b { color:#facc15; display:block; font-size:21px; }
+#vitalarme .v-nav { display:flex; gap:8px; overflow-x:auto; white-space:nowrap; padding:8px 0 17px; margin-bottom:4px; }
+#vitalarme .v-page > *+* { margin-top:17px; }
+#vitalarme .v-sectionhead { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:18px; }
+#vitalarme .v-sectionhead p { margin-bottom:0; }
+#vitalarme .v-line { height:1px; background:#e3e9f1; margin:17px 0; }
+#vitalarme .v-foot { text-align:center; font-size:12px; color:#708196; margin-top:25px; }
